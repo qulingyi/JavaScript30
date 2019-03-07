@@ -42,9 +42,31 @@
     input {
       width: 100px;
     }
+
   </style>
 
   <script>
+    var color = document.querySelector('#base');
+    var spacing = document.querySelector('#spacing');
+    var blur = document.querySelector('#blur');
+    var img = document.querySelector('img');
+    const setColor = () => {
+      document.querySelector('.hl').style.color = color.value;
+      img.style.background= color.value;
+    };
+    const setSpacing = () => {
+      img.style.padding = `${spacing.value}px`;
+    };
+    const setBlur = () => {
+      img.style.filter = `blur(${blur.value}px)`;
+    };
+    setColor();
+    setSpacing();
+    setBlur();
+    color.addEventListener('input', setColor, false);
+    spacing.addEventListener('input', setSpacing, false)
+    blur.addEventListener('input', setBlur, false)
+
   </script>
 
 </body>
