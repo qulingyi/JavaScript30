@@ -62,7 +62,9 @@
   function playAudio(e) {
     const au = document.querySelector(`audio[data-key="${e.keyCode}"]`);
     const bu = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if(!au) return;
     bu.classList.add('playing');
+    au.currentTime = 0;
     au.play();
   }
   window.addEventListener('keyup', styleBack);
