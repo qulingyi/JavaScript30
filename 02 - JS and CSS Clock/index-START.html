@@ -9,9 +9,9 @@
 
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand hour-hand" id="hour"></div>
+        <div class="hand min-hand" id="minute"></div>
+        <div class="hand second-hand" id="second"></div>
       </div>
     </div>
 
@@ -63,11 +63,31 @@
       position: absolute;
       top: 50%;
     }
-
+    #second {
+      transform-origin: 180px 3px;
+    }
+    #minute {
+      transform-origin: 180px 3px;
+    }
+    #hour {
+      transform-origin: 180px 3px;
+    }
   </style>
 
   <script>
-
+    var second = document.getElementById("second");
+    var minute = document.getElementById("minute");
+    var hour = document.getElementById("hour");
+    var rotate = function() {
+      var secondDeg = new Date().getSeconds() * 6;
+      var minDeg = new Date().getMinutes() * 6 + secondDeg / 60;
+      var hourDeg = new Date().getHours() * 30 + minDeg / 12 + secondDeg / 3600;
+      second.style.transform = `rotate(${secondDeg + 90}deg)`;
+      minute.style.transform = `rotate(${minDeg + 90}deg)`;
+      hour.style.transform = `rotate(${hourDeg + 90}deg)`;
+    }
+    document.addEventListener("DOMContentLoaded", rotate);
+    setInterval(rotate, 1000);
 
   </script>
 </body>
