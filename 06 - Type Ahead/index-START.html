@@ -16,6 +16,48 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const searching = document.querySelector('.search');
+const base = document.querySelector('ul');
+var rawData;
+fetch(endpoint)
+.then((res) => {
+  return res.json();
+})
+.then((data) => {
+  rawData = data;
+})
+.catch((err) => {
+  console.log('err: ', err);
+})
+searching.addEventListener('input', () => {
+  while (base.hasChildNodes()) {
+    base.removeChild(base.lastChild);
+  }
+  var input = searching.value.toUpperCase();
+  for (let i = 0; i < rawData.length; i++) {
+  if(rawData[i].city.toUpperCase().includes(input) || rawData[i].state.toUpperCase().includes(input)) {
+    const test = document.createElement('li');
+    const add = document.createElement('span');
+    var converted = '';
+    test.innerHTML = rawData[i].city + ', ' + rawData[i].state;
+    let p= rawData[i].population.toString();
+    if(p.length <= 6 && p.length >= 4) {
+      converted = p.slice(0, p.length - 3) + ',' + p.slice(-3);
+    }
+    else if(p.length >= 7) {
+      converted = p.slice(0, p.length - 6) + ','  + p.slice(p.length - 6, p.length - 3)
+      + ',' + p.slice(-3);
+    }
+    else {
+      converted = p;
+    }
+    add.innerHTML = converted;
+    test.append(add);
+    base.append(test);
+  }
+}
+})
+
 
 </script>
 </body>
